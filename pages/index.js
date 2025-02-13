@@ -3,8 +3,10 @@ import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ServicesGrid from '../components/ServicesGrid';
+import urlData from '../data/www_links_20250213_143022.json';
 
-export default function WelcomePage() {
+export default function Home() {
+  const [data, setData] = useState(urlData);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -80,6 +82,55 @@ export default function WelcomePage() {
         </div>
 
         <ServicesGrid />
+
+        <div className="container mx-auto p-4">
+          <h1 className="text-3xl font-bold mb-6">URL Redirect Manager</h1>
+          
+          {data.map((pageData, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-md p-6 mb-6">
+              <h2 className="text-xl font-semibold text-gray-800 pb-4 border-b border-gray-200">
+                {pageData.page_url}
+              </h2>
+              
+              <div className="mt-4 space-y-4">
+                {pageData.links.map((link, linkIndex) => {
+                  const needsUpdate = link.url !== link.final_url;
+                  
+                  return (
+                    <div 
+                      key={linkIndex}
+                      className={`p-4 rounded-lg ${needsUpdate ? 'bg-red-50 border-l-4 border-red-500' : 'bg-green-50 border-l-4 border-green-500'}`}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="flex-grow">
+                          <div className="mb-2">
+                            <span className="font-medium">Original URL: </span>
+                            <span className="text-gray-700">{link.url}</span>
+                          </div>
+                          <div className="mb-2">
+                            <span className="font-medium">Final URL: </span>
+                            <span className="text-gray-700">{link.final_url}</span>
+                          </div>
+                          <div>
+                            <span className="font-medium">Anchor Text: </span>
+                            <span className="italic text-gray-600">{link.anchor_text}</span>
+                          </div>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-sm ${
+                          needsUpdate 
+                            ? 'bg-red-500 text-white' 
+                            : 'bg-green-500 text-white'
+                        }`}>
+                          {needsUpdate ? 'Needs Update' : 'Updated'}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
       </main>
 
       <Footer />
