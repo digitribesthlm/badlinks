@@ -27,7 +27,8 @@ export default function SimpleLayout({ children }) {
 
       if (res.ok) {
         localStorage.removeItem('user');
-        router.push('/');
+        document.cookie = 'auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+        window.location.href = '/';
       }
     } catch (error) {
       console.error('Logout failed:', error);
