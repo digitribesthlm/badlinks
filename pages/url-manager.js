@@ -213,12 +213,36 @@ export default function URLManager() {
                           <div className="flex justify-between items-start">
                             <div className="flex-grow">
                               <div className="mb-2">
-                                <span className="font-medium">Original URL: </span>
-                                <span className="text-gray-700 break-all">{link.original_url}</span>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="font-medium">Original URL: </span>
+                                  <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                </div>
+                                <a 
+                                  href={link.original_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="text-blue-600 hover:text-blue-800 break-all underline"
+                                >
+                                  {link.original_url}
+                                </a>
                               </div>
                               <div className="mb-2">
-                                <span className="font-medium">Final URL: </span>
-                                <span className="text-gray-700 break-all">{link.final_url}</span>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="font-medium">Final URL: </span>
+                                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                </div>
+                                <a 
+                                  href={link.final_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="text-blue-600 hover:text-blue-800 break-all underline"
+                                >
+                                  {link.final_url}
+                                </a>
                               </div>
                               <div className="mb-2">
                                 <span className="font-medium">Anchor Text: </span>
@@ -239,7 +263,14 @@ export default function URLManager() {
                                     {link.redirect_history.map((url, idx) => (
                                       <div key={idx} className="flex items-center text-sm">
                                         <span className="text-gray-500">{idx + 1}.</span>
-                                        <span className="ml-2 text-gray-700 break-all">{url}</span>
+                                        <a 
+                                          href={url} 
+                                          target="_blank" 
+                                          rel="noopener noreferrer" 
+                                          className="ml-2 text-blue-600 hover:text-blue-800 break-all underline"
+                                        >
+                                          {url}
+                                        </a>
                                       </div>
                                     ))}
                                   </div>
