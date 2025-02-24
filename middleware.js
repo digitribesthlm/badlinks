@@ -4,16 +4,18 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
   const authToken = request.cookies.get('auth-token');
 
-  // Protect dashboard routes
-  if (pathname.startsWith('/dashboard')) {
-    if (!authToken) {
-      return NextResponse.redirect(new URL('/', request.url));
+  // Only allow access to url-manager and redirect all other authenticated routes
+  if (authToken) {
+    if (pathname === '/') {
+      return NextResponse.redirect(new URL('/url-manager', request.url));
     }
-  }
-
-  // Prevent authenticated users from accessing login page
-  if (pathname === '/' && authToken) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    if (!pathname.startsWith('/url-manager') && 
+        !pathname.startsWith('/_next') && 
+        !pathname.startsWith('/api')) {
+      return NextResponse.redirect(new URL('/url-manager', request.url));
+    }
+  } else if (pathname.startsWith('/url-manager')) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();

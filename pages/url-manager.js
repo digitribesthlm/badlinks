@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
+import SimpleLayout from '../components/SimpleLayout';
 
 export default function URLManager() {
   const [data, setData] = useState([]);
@@ -100,7 +100,7 @@ export default function URLManager() {
   };
 
   return (
-    <DashboardLayout>
+    <SimpleLayout>
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Static Links Manager</h1>
         <p className="text-gray-600">
@@ -279,6 +279,6 @@ export default function URLManager() {
           })}
         </div>
       )}
-    </DashboardLayout>
+    </SimpleLayout>
   );
 } 

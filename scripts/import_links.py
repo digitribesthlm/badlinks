@@ -30,9 +30,18 @@ def import_links():
         
         # Add status tracking to each link
         for link in page['links']:
-            link['is_updated'] = False
-            link['updated_at'] = None
-            link['updated_by'] = None
+            # Determine initial status based on URL and status code
+            needs_update = link['original_url'] != link['final_url']
+            has_error = link['status_code'] != 200
+            
+            link['status'] = {
+                'is_updated': False,
+                'needs_update': needs_update,
+                'has_error': has_error,
+                'updated_at': None,
+                'updated_by': None,
+                'notes': None
+            }
 
     # Insert the data
     try:

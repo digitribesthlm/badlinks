@@ -8,15 +8,16 @@ export default async function handler(req, res) {
 
   try {
     const { db } = await connectToDatabase();
-    const { pageId, linkIndex, userId } = req.body;
+    const { pageId, linkIndex, userId, notes } = req.body;
 
     const result = await db.collection('static_links').updateOne(
       { _id: ObjectId(pageId) },
       { 
         $set: {
-          [`links.${linkIndex}.is_updated`]: true,
-          [`links.${linkIndex}.updated_at`]: new Date(),
-          [`links.${linkIndex}.updated_by`]: userId,
+          [`links.${linkIndex}.status.is_updated`]: true,
+          [`links.${linkIndex}.status.updated_at`]: new Date(),
+          [`links.${linkIndex}.status.updated_by`]: userId,
+          [`links.${linkIndex}.status.notes`]: notes || null,
           updated_at: new Date()
         }
       }
